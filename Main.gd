@@ -2,12 +2,14 @@ extends Node
 
 var small_balls = []
 
+#export (Line2D) var line
+
 export (PackedScene) var Ball
 var counter = 0
 func _input(event):
 	pass
 	if event.is_action_pressed("click"):
-		for _i in range(100):
+		for _i in range(20):
 			var new_ball = Ball.instance()
 			new_ball.position = get_viewport().get_mouse_position()
 			new_ball.position.x += randi() % 200
@@ -46,13 +48,22 @@ func _process(_delta):
 						dict_of_linear_velocity_to_count[bin] = 1
 		pass
 		var poolvector2array = PoolVector2Array()
+#		var my_texture = Texture()
 		for bin in bins:
 			poolvector2array.push_back(Vector2(bin, dict_of_linear_velocity_to_count[bin]))
 		
 		print(dict_of_linear_velocity_to_count)
 		print_counter = 0
+#		var array = PoolVector2Array()
+		var arr = PoolVector2Array()
+		for bin in bins:
+			var x = bin
+			var y = 1.5*( - dict_of_linear_velocity_to_count[bin])
+			arr.append(Vector2(x, y))
+			
+		$MyNode2D.mypoolvector2array = arr
 #		$MyLine2D.draw_polyline_colors(poolvector2array, PoolColorArray())
-		$MyNode2D.texture = poolvector2array
+#		$MyNode2D.Texture = array
 #_draw()
 #func _draw():
 #	$MyCanvasLayer.draw_line(Vector2(0,0), Vector2(50, 50), Color(255, 0, 0), 1)
